@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useEffect } from 'react';
+import { MovieCard } from './components/movieCard/MovieCard';
+import { useAppDispatch, useAppSelector } from './rtk/hooks/hooks';
+import { setMovies } from './rtk/slices/movieSlice';
 
 function App() {
+
+  const dispatch = useAppDispatch()
+
+  const {page, service, type, genre, moviesArray, country} = useAppSelector(state => state.movies)
+ 
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '6ccd75df03msh4bd02ee4f2df42ap16cf8ajsnd10916768322',
+      'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
+    }
+  };
+
+  const requestUrl: string = 'https://streaming-availability.p.rapidapi.com/search/basic?country=' + country + '&service=' + service + '&type=' + type
+  interface results {
+    movies: any[]
+    total_pages: number
+  }
+
+  const clickHandler = () => {
+    dispatch(setMovies([1, 2, 3]))
+  }
+
+  useEffect(() => {
+    console.log(moviesArray)
+  }, [moviesArray])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => clickHandler()}>click</button>
+      {moviesArray.map(movie => <MovieCard key={movie} {...movie}/>)}
     </div>
   );
 }
 
 export default App;
+
