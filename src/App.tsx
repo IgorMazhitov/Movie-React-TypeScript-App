@@ -1,6 +1,10 @@
 
 import React, { useEffect } from 'react';
 import { MovieCard } from './components/movieCard/MovieCard';
+import NewAndSoon from './components/MoviesButtons/NewAndSoon';
+import PagesSwitcher from './components/MoviesButtons/PagesSwitcher';
+import MoviesList from './components/MoviesList/MoviesList';
+import SideBar from './components/SideBar/SideBar';
 import { useAppDispatch, useAppSelector } from './rtk/hooks/hooks';
 import { setMovies } from './rtk/slices/movieSlice';
 
@@ -25,7 +29,7 @@ function App() {
   }
 
   const clickHandler = () => {
-    dispatch(setMovies([1, 2, 3]))
+    dispatch(setMovies([1, 2, 3, 4, 5, 6, 7, 8]))
   }
 
   useEffect(() => {
@@ -33,9 +37,8 @@ function App() {
   }, [moviesArray])
 
   return (
-    <div className="App">
-      <button onClick={() => clickHandler()}>click</button>
-      {moviesArray.map(movie => <MovieCard key={movie} {...movie}/>)}
+    <div className="App relative bg-slate-900 w-screen min-h-screen h-fit overflow-scroll flex flex-row justify-start items-center">
+      <SideBar />
     </div>
   );
 }

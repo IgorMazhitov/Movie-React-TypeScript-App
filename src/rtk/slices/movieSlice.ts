@@ -1,19 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
 
 interface IMoviesState {
-    country: string,
+    country: string[],
     service: string,
     type: string,
-    genre?: number,
+    genre?: number[],
     keyword?: string,
     page?: number,
     moviesArray: any[]
 }
 
 const initialState: IMoviesState = {
-    country: 'us',
+    country: ['us'],
     service: 'disney',
     type: 'movie',
     page: 1,
