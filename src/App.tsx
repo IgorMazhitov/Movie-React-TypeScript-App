@@ -37,8 +37,13 @@ function App() {
   }, [moviesArray])
 
   return (
-    <div className="App relative bg-slate-900 w-screen min-h-screen h-fit overflow-scroll flex flex-row justify-start items-center">
+    <div className="App relative bg-slate-900 w-screen h-screen overflow-scroll flex flex-row justify-start items-center">
       <SideBar />
+      <div className='flex flex-col justify-start items-start w-full max-h-full'>
+        <NewAndSoon />
+        <MoviesList newList={true}/>
+        <MoviesList soonList={true}/>
+      </div>
     </div>
   );
 }
