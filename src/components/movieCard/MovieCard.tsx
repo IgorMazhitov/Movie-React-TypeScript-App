@@ -3,6 +3,7 @@ import React, { useState } from "react";
 export const MovieCard: React.FC = (props: any) => {
 
     const {title, year, posterURLs, overview} = props
+    const [cardStyle, setCardStyle] = useState("relative h-[320px] w-[550px] rounded-lg flex flex-row justify-center items-center overflow-hidden shadow-slate-400 ml-5 duration-300")
     const [buttonHover, setButtonHover] = useState("watch_button w-40 h-12 font-bold text-4xl text-gray-400 rounded-md duration-300") // styling for button hover 
     const [actionInfo, setActionInfo] = useState({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})
     const [actionFav, setActionFav] = useState({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})
@@ -11,14 +12,20 @@ export const MovieCard: React.FC = (props: any) => {
     return (
 
             <div
-            onMouseEnter={() => setImageStyle(prev => prev.replace('scale-100', 'scale-110'))}
-            onMouseLeave={() => setImageStyle(prev => prev.replace('scale-110', 'scale-100'))}
+            onMouseEnter={() => {
+              setCardStyle(prev => prev + ' shadow-lg')
+              setImageStyle(prev => prev.replace('scale-100', 'scale-110'))}
+            }
+            onMouseLeave={() => {
+              setCardStyle(prev => prev.replace(' shadow-lg', ''))
+              setImageStyle(prev => prev.replace('scale-110', 'scale-100'))
+            }}
             /* card container */
-            className="relative h-[320px] w-[550px] rounded-md flex flex-row justify-center items-center overflow-hidden"> 
+            className={cardStyle}> 
 
               <div
               /* main card container with content */
-              className="relative h-full w-full rounded-md"> 
+              className="relative h-full w-full rounded-xl"> 
 
                 <div
                 /* black gradient for card */
@@ -34,7 +41,7 @@ export const MovieCard: React.FC = (props: any) => {
 
                   <p
                   /* card title */ 
-                  className=" w-full h-auto text-left font-bold text-5xl text-gray-400 px-8">{title}</p>
+                  className=" w-full h-auto text-left font-bold text-5xl text-gray-300 px-8">{title}</p>
 
                   <div
                   /* buttons flex container */

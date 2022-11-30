@@ -58,6 +58,9 @@ interface IMoviesState {
     searchType: string,
     searchGenres?: number,
     searchKeyWord?: string,
+    loadingState?: boolean,
+    filterState?: boolean,
+    genresState?: boolean,
 
 }
 
@@ -68,8 +71,10 @@ const initialState: IMoviesState = {
     searchCountry: 'us',
     searchService: 'netflix',
     searchType: 'movie',
-    searchGenres: 1,
-    searchKeyWord: ''
+    searchKeyWord: '',
+    loadingState: false,
+    filterState: false,
+    genresState: false
 
 }
   
@@ -119,16 +124,26 @@ export const moviesSlice = createSlice({
         },
         setKeyword(state, action) {
             state.searchKeyWord = action.payload
+        },
+        setFilterState(state, action) {
+            state.filterState = action.payload
+        },
+        setFilterGenresState(state, action) {
+            state.genresState = action.payload
         }
     }, 
     extraReducers(builder) {
         builder.addCase(getMovies.fulfilled, (state, action) => {
             console.log(action.payload)
+            state.loadingState = false
             state.moviesArray = action.payload.results
             state.maxPage = action.payload.total_pages
+        })
+        builder.addCase(getMovies.pending, (state, action) => {
+            state.loadingState = true
         })
     },
 })
 
 export default moviesSlice.reducer
-export const {setCountry, setGenre, setKeyword, setMovies, setPage, setService, setType} = moviesSlice.actions
+export const {setCountry, setGenre, setKeyword, setMovies, setPage, setService, setType, setFilterState, setMaxPage, setFilterGenresState} = moviesSlice.actions

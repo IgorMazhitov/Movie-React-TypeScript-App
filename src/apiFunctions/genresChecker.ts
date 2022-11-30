@@ -1,40 +1,96 @@
-export const getGenres = (genres: number[]) => {
+export const getGenresFromNumber = (genres: number) => {
 
-    let results: string[] = []
-
-    for (let i = 0; i < genres.length; i++) {
-
-        if (genres[i] = 1) {results.push('Biography')}
-        if (genres[i] = 2) {results.push('Film Noir')}
-        if (genres[i] = 3) {results.push('Game Show')}
-        if (genres[i] = 4) {results.push('Musical')}
-        if (genres[i] = 5) {results.push('Sport')}
-        if (genres[i] = 6) {results.push('Short')}
-        if (genres[i] = 7) {results.push('Adult')}
-        if (genres[i] = 12) {results.push('Adventure')}
-        if (genres[i] = 14) {results.push('Fantasy')}
-        if (genres[i] = 16) {results.push('Animation')}
-        if (genres[i] = 18) {results.push('Drama')}
-        if (genres[i] = 27) {results.push('Horror')}
-        if (genres[i] = 28) {results.push('Action')}
-        if (genres[i] = 35) {results.push('Comedy')}
-        if (genres[i] = 36) {results.push('History')}
-        if (genres[i] = 37) {results.push('Western')}
-        if (genres[i] = 53) {results.push('Thriller')}
-        if (genres[i] = 80) {results.push('Crime')}
-        if (genres[i] = 99) {results.push('Documentary')}
-        if (genres[i] = 878) {results.push('Science Fiction')}
-        if (genres[i] = 9648) {results.push('Mystery')}
-        if (genres[i] = 10402) {results.push('Music')}
-        if (genres[i] = 10749) {results.push('Romance')}
-        if (genres[i] = 10751) {results.push('Family')}
-        if (genres[i] = 10752) {results.push('War')}
-        if (genres[i] = 10763) {results.push('News')}
-        if (genres[i] = 10764) {results.push('Reality')}
-        if (genres[i] = 10767) {results.push('Talk Show')}
-
-    }
-
-    return results
+    if (genres === 1) {return 'Biography'}
+    if (genres === 2) {return 'Film Noir'}
+    if (genres === 3) {return 'Game Show'}
+    if (genres === 4) {return 'Musical'}
+    if (genres === 5) {return 'Sport'}
+    if (genres === 6) {return 'Short'}
+    if (genres === 7) {return 'Adult'}
+    if (genres === 12) {return 'Adventure'}
+    if (genres === 14) {return 'Fantasy'}
+    if (genres === 16) {return 'Animation'}
+    if (genres === 18) {return 'Drama'}
+    if (genres === 27) {return 'Horror'}
+    if (genres === 28) {return 'Action'}
+    if (genres === 35) {return 'Comedy'}
+    if (genres === 36) {return 'History'}
+    if (genres === 37) {return 'Western'}
+    if (genres === 53) {return 'Thriller'}
+    if (genres === 80) {return 'Crime'}
+    if (genres === 99) {return 'Documentary'}
+    if (genres === 878) {return 'Science Fiction'}
+    if (genres === 9648) {return 'Mystery'}
+    if (genres === 10402) {return 'Music'}
+    if (genres === 10749) {return 'Romance'}
+    if (genres === 10751) {return 'Family'}
+    if (genres === 10752) {return 'War'}
+    if (genres === 10763) {return 'News'}
+    if (genres === 10764) {return 'Reality'}
+    if (genres === 10767) {return 'Talk Show'}
 
 }
+
+export const getGenresFromString = (genres: string) => {
+
+    if (genres === 'Biography') {return 1}
+    if (genres === 'Film Noir') {return 2}
+    if (genres === 'Game Show') {return 3}
+    if (genres === 'Musical') {return 4}
+    if (genres === 'Sport') {return 5}
+    if (genres === 'Short') {return 6}
+    if (genres === 'Adult') {return 7}
+    if (genres === 'Adventure') {return 12}
+    if (genres === 'Fantasy') {return 14}
+    if (genres === 'Animation') {return 16}
+    if (genres === 'Drama') {return 18}
+    if (genres === 'Horror') {return 27}
+    if (genres === 'Action') {return 28}
+    if (genres === 'Comedy') {return 35}
+    if (genres === 'History') {return 36}
+    if (genres === 'Western') {return 37}
+    if (genres === 'Thriller') {return 53}
+    if (genres === 'Crime') {return 80}
+    if (genres === 'Documentary') {return 99}
+    if (genres === 'Science Fiction') {return 878}
+    if (genres === 'Mystery') {return 9648}
+    if (genres === 'Music') {return 10402}
+    if (genres === 'Romance') {return 10749}
+    if (genres === 'Family') {return 10751}
+    if (genres === 'War') {return 10752}
+    if (genres === 'News') {return 10763}
+    if (genres === 'Reality') {return 10764}
+    if (genres === 'Talk Show') {return 10767}
+
+}
+
+export const genresArray = [
+    'Biography', 
+    'Film Noir', 
+    'Game Show', 
+    'Musical', 
+    'Sport', 
+    'Short', 
+    'Adult', 
+    'Adventure', 
+    'Fantasy', 
+    'Animation', 
+    'Drama', 
+    'Horror', 
+    'Action',
+    'Comedy',
+    'History',
+    'Western',
+    'Thriller',
+    'Crime',
+    'Documentary',
+    'Science Fiction',
+    'Mystery',
+    'Music',
+    'Romance',
+    'Family',
+    'War',
+    'News',
+    'Reality',
+    'Talk Show'
+]
