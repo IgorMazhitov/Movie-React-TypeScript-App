@@ -1,7 +1,6 @@
 
 import React, { useEffect } from 'react';
 import { MovieCard } from './components/movieCard/MovieCard';
-import NewAndSoon from './components/MoviesButtons/NewAndSoon';
 import PagesSwitcher from './components/MoviesButtons/PagesSwitcher';
 import MoviesList from './components/MoviesList/MoviesList';
 import SideBar from './components/SideBar/SideBar';
@@ -12,7 +11,7 @@ function App() {
 
   const dispatch = useAppDispatch()
 
-  const {page, service, type, genre, moviesArray, country} = useAppSelector(state => state.movies)
+  const {searchPage, searchService, searchType, searchGenres, moviesArray, searchCountry} = useAppSelector(state => state.movies)
  
   const options = {
     method: 'GET',
@@ -22,27 +21,17 @@ function App() {
     }
   };
 
-  const requestUrl: string = 'https://streaming-availability.p.rapidapi.com/search/basic?country=' + country + '&service=' + service + '&type=' + type
+  const requestUrl: string = 'https://streaming-availability.p.rapidapi.com/search/basic?country=' + searchCountry + '&service=' + searchService + '&type=' + searchType
   interface results {
     movies: any[]
     total_pages: number
   }
 
-  const clickHandler = () => {
-    dispatch(setMovies([1, 2, 3, 4, 5, 6, 7, 8]))
-  }
-
-  useEffect(() => {
-    console.log(moviesArray)
-  }, [moviesArray])
-
   return (
-    <div className="App relative bg-slate-900 w-screen h-screen overflow-scroll flex flex-row justify-start items-center">
+    <div className="App relative bg-slate-900 w-screen h-screen overflow-scroll flex flex-row justify-start items-start m-0 p-0">
       <SideBar />
-      <div className='flex flex-col justify-start items-start w-full max-h-full'>
-        <NewAndSoon />
-        <MoviesList newList={true}/>
-        <MoviesList soonList={true}/>
+      <div className='flex flex-col justify-start items-start w-full max-h-full pt-32'>
+        <MoviesList />
       </div>
     </div>
   );

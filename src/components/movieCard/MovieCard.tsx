@@ -1,50 +1,51 @@
 import React, { useState } from "react";
 
-export const MovieCard: React.FC = (props) => {
+export const MovieCard: React.FC = (props: any) => {
 
-    const [hoverGlow, setHoverGlow] = useState('card_box absolute duration-300 opacity-0 h-full w-full rounded-md') // styling for hover outer glow effect
+    const {title, year, posterURLs, overview} = props
+    const [buttonHover, setButtonHover] = useState("watch_button w-40 h-12 font-bold text-4xl text-gray-400 rounded-md duration-300") // styling for button hover 
     const [actionInfo, setActionInfo] = useState({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})
     const [actionFav, setActionFav] = useState({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})
-    const title = "Avengers: Endgame"
-    const overview = "Ambitious high school senior Samantha Hodges is a serious journalist, both for the school paper and for the yearbook, but she's just as serious about her friends, Nate, Gillian, and Rudy, all of whom are vying with her for a full-ride local scholarship to college. Very close to her mother, Emily, who is the school's guidance counselor, Samantha finds her reporting taking an investigative turn when two of her classmates--and contenders for the scholarship--are murdered."
-
-
+    const [imageStyle, setImageStyle] = useState("z-0 card-img-top w-full h-full object-cover rounded-md duration-300 scale-100")
 
     return (
 
             <div
-            onMouseEnter={() => setHoverGlow('card_box absolute duration-300 opacity-100 h-full w-full rounded-md')}
-            onMouseLeave={() => setHoverGlow('card_box absolute duration-300 opacity-0 h-full w-full rounded-md')}
-            /* card container with white gradient */
-            className="relative h-[350px] w-[350px] rounded-md flex flex-row justify-center items-center"> 
-
-              <div className={hoverGlow}></div>
+            onMouseEnter={() => setImageStyle(prev => prev.replace('scale-100', 'scale-110'))}
+            onMouseLeave={() => setImageStyle(prev => prev.replace('scale-110', 'scale-100'))}
+            /* card container */
+            className="relative h-[320px] w-[550px] rounded-md flex flex-row justify-center items-center overflow-hidden"> 
 
               <div
               /* main card container with content */
-              className="relative h-[348px] w-[348px] rounded-md"> 
+              className="relative h-full w-full rounded-md"> 
 
                 <div
                 /* black gradient for card */
-                className="card_dark_gradient rounded-md absolute bottom-0 left-0 w-full h-full"></div>
+                className="card_dark_gradient rounded-md absolute bottom-0 left-0 w-full h-full z-[1]"></div>
 
                 <img
                 /* card image (poster) */
-                className="card-img-top w-full h-full object-cover rounded-md" src="https://image.tmdb.org/t/p/original/j5CNWCRvYonv4jMukmMe267T3Cr.jpg" alt=""/> 
+                className={imageStyle} src={posterURLs.original} alt=""/> 
 
                 <div
                 /* title and buttons container */
-                className="absolute bottom-0 w-full h-auto flex flex-col justify-start items-center"> 
+                className="absolute bottom-0 w-full h-auto flex flex-col justify-start items-center z-[2]"> 
 
                   <p
                   /* card title */ 
-                  className=" w-full h-auto text-center font-semibold text-5xl text-gray-400">{title}</p>
+                  className=" w-full h-auto text-left font-bold text-5xl text-gray-400 px-8">{title}</p>
 
                   <div
                   /* buttons flex container */
-                  className="flex flex-row justify-between items-center w-full h-full my-5 pl-8 pr-4">
+                  className="flex flex-row justify-between items-center w-full h-full my-5 px-8">
 
-                    <button className="watch_button w-40 h-12 font-bold text-4xl text-gray-400 rounded-md">WATCH</button>
+                    <button 
+                    className={buttonHover}
+                    onMouseEnter={() => setButtonHover(prev => prev.replace('watch_button', 'watch_button_hover').replace('text-gray-400', 'text-gray-600'))}
+                    onMouseLeave={() => setButtonHover(prev => prev.replace('watch_button_hover', 'watch_button').replace('text-gray-600', 'text-gray-400'))}
+                    > WATCH 
+                    </button>
 
                     <div className="flex flex-row justify-between items-center w-28 h-11">
 
