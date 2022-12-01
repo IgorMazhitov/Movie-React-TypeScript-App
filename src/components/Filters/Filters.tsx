@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { getGenresFromNumber } from "../../utils/auxFunctions";
-import { useAppDispatch, useAppSelector } from "../../rtk/hooks/hooks";
+import { useAppSelector } from "../../rtk/hooks/hooks";
 import GenresFilters from "./GenresFilters";
 import CountriesFilter from "./CountriesFilters";
 import ServicesFilters from "./ServicesFilters";
+import TypesFilters from "./TypesFilters";
 
     const Filters: React.FC = (props) => {
 
-        const {searchGenres, searchCountry, searchService} = useAppSelector(state => state.movies)
+        const {searchGenres, searchCountry, searchService, searchType} = useAppSelector(state => state.movies)
         const [filtersState, setFiltersState] = useState(false)
         const [genresState, setGenresState] = useState(false)
         const [serviceState, setServiceState] = useState(false)
         const [countriesState, setCountiresState] = useState(false)
+        const [typeState, setTypeState] = useState(false)
         const [filtersStyle, setFiltersStyle] = useState("flex flex-col gap-10 justify-start items-start w-auto h-72 overflow-hidden flex-wrap mr-10")
 
         const clickHandler = () => {
@@ -21,6 +23,7 @@ import ServicesFilters from "./ServicesFilters";
                 setGenresState(false)
                 setServiceState(false)
                 setCountiresState(false)
+                setTypeState(false)
                 setFiltersState(false)
                 setFiltersStyle(prev => prev.replaceAll('h-72', 'h-0'))
 
@@ -38,6 +41,7 @@ import ServicesFilters from "./ServicesFilters";
             setGenresState(!genresState)
             setServiceState(false)
             setCountiresState(false)
+            setTypeState(false)
 
         }
 
@@ -46,6 +50,7 @@ import ServicesFilters from "./ServicesFilters";
             setServiceState(!serviceState)
             setCountiresState(false)
             setGenresState(false)
+            setTypeState(false)
 
         }
 
@@ -54,6 +59,16 @@ import ServicesFilters from "./ServicesFilters";
             setCountiresState(!countriesState)
             setGenresState(false)
             setServiceState(false)
+            setTypeState(false)
+
+        }
+
+        const typeClick = () => {
+
+            setTypeState(!typeState)
+            setGenresState(false)
+            setServiceState(false)
+            setCountiresState(false)
 
         }
 
@@ -101,6 +116,13 @@ import ServicesFilters from "./ServicesFilters";
                                 Country: {searchCountry.toUpperCase()}
                             </div>
 
+                            <div
+                            onClick={() => typeClick()}
+                            className="bg-gray-500 text-gray-900 rounded-md font-bold text-2xl px-4 py-1 self-start cursor-pointer"
+                            >
+                                Type: {searchType.toUpperCase()}
+                            </div>
+
                         </div>
 
                         <div className="flex flex-row gap-10 w-auto h-10 flex-wrap">
@@ -110,6 +132,8 @@ import ServicesFilters from "./ServicesFilters";
                             { countriesState && <CountriesFilter /> }
 
                             { serviceState && <ServicesFilters /> }
+
+                            { typeState && <TypesFilters /> }
 
                         </div>
                     </div>

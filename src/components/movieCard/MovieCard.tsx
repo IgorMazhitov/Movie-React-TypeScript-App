@@ -12,6 +12,7 @@ export const MovieCard = (props: IMovieState) => {
     const [actionFav, setActionFav] = useState({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})
     const [imageStyle, setImageStyle] = useState("z-0 card-img-top w-full h-full object-cover rounded-md duration-300 scale-100")
 
+    console.log(streamingInfo, streamingInfo[searchService], searchCountry, searchService)
     const linkToWatch = streamingInfo[searchService][searchCountry].link 
     
 
@@ -73,7 +74,8 @@ export const MovieCard = (props: IMovieState) => {
                       onMouseEnter={() => setActionInfo({filter: 'invert(14%) sepia(57%) saturate(3942%) hue-rotate(226deg) brightness(97%) contrast(91%)'})}
                       onMouseLeave={() => setActionInfo({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})}
                       className="iconInfo w-11 h-11 cursor-pointer duration-300" 
-                      src={require('../../svg/info.svg').default} 
+                      src={require('../../svg/info.svg').default}
+                      alt=""
                       />
 
                       <img 
@@ -81,7 +83,8 @@ export const MovieCard = (props: IMovieState) => {
                       onMouseEnter={() => setActionFav({filter: 'invert(18%) sepia(56%) saturate(5481%) hue-rotate(352deg) brightness(79%) contrast(101%)'})}
                       onMouseLeave={() => setActionFav({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})}
                       className="iconFav w-11 h-11 cursor-pointer duration-300" 
-                      src={require('../../svg/heart.svg').default} 
+                      src={require('../../svg/heart.svg').default}
+                      alt=""
                       />
 
                     </div>

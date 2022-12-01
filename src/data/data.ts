@@ -1286,3 +1286,10 @@ export const servicesAndCountries = {
        "us"
     ]
  }
+
+export const typesArray = [
+
+    'movie',
+    'series'
+
+]

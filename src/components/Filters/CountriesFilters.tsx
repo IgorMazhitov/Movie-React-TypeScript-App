@@ -21,7 +21,7 @@ import { countries, servicesAndCountries } from "../../data/data"
 
                 {countriesArray.map(el => 
 
-                    <option value={el}>
+                    <option key={el} value={el}>
 
                         {countries.map(el2 => el2.Code.toLowerCase() === el ? el2.Name : null)}
 

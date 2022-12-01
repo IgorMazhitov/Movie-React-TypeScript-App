@@ -5,7 +5,7 @@ import { getMovies, setPage } from "../../rtk/slices/movieSlice";
     const PagesSwitcher: React.FC = (props) => {
 
         const dispatch = useAppDispatch()
-        const {searchPage, maxPage, searchCountry, searchType} = useAppSelector(state => state.movies)
+        const {searchPage, maxPage, searchCountry, searchType, searchService} = useAppSelector(state => state.movies)
 
         const pageDecr = () => {
             if (searchPage - 1 <= 0) {
@@ -14,7 +14,7 @@ import { getMovies, setPage } from "../../rtk/slices/movieSlice";
 
                 const params = {
                     country: searchCountry,
-                    service: 'disney',
+                    service: searchService,
                     type: searchType,
                     page: searchPage - 1,
                     output_language: 'en',
@@ -33,7 +33,7 @@ import { getMovies, setPage } from "../../rtk/slices/movieSlice";
 
                 const params = {
                     country: searchCountry,
-                    service: 'disney',
+                    service: searchService,
                     type: searchType,
                     page: searchPage + 1,
                     output_language: 'en',
