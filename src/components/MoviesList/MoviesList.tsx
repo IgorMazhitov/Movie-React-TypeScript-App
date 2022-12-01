@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { genresArray, getGenresFromNumber, getGenresFromString } from "../../apiFunctions/genresChecker";
 import { useAppDispatch, useAppSelector } from "../../rtk/hooks/hooks";
-import { getMovies, setFilterGenresState, setFilterState, setGenre, setMovies, setPage, setService } from "../../rtk/slices/movieSlice";
-import { data } from "../../tempData";
+import { getMovies, setPage, setService } from "../../rtk/slices/movieSlice";
 import { MovieCard } from "../movieCard/MovieCard";
 import PagesSwitcher from "../MoviesButtons/PagesSwitcher";
+import Filters from "../Filters/Filters";
 
     const MoviesList = (props: any) => {
 
         
         const dispatch = useAppDispatch()
-        const {moviesArray, searchCountry, searchService, searchPage, searchType, loadingState, filterState, genresState, searchGenres} = useAppSelector(state => state.movies)
+        const {moviesArray, searchCountry, searchType, loadingState, searchGenres} = useAppSelector(state => state.movies)
         const [netflixHover, setNetflixHover] = useState("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
         const [disneyHover, setDisneyHover] = useState("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
+        const [hboHover, setHboHover] = useState("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
 
         const netflixClickHandler = () => {
 
@@ -30,6 +30,7 @@ import PagesSwitcher from "../MoviesButtons/PagesSwitcher";
             dispatch(getMovies(params))
 
             setDisneyHover("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
+            setHboHover("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
             setNetflixHover(prev => prev.replace('h-1', 'h-1.5').replace('bg-red-500', 'bg-red-600'))
 
         }
@@ -38,7 +39,7 @@ import PagesSwitcher from "../MoviesButtons/PagesSwitcher";
             console.log(searchGenres)
         }, [searchGenres])
         
-        const DisneyClickHandler = () => {
+        const disneyClickHandler = () => {
 
             const params = {
                 country: searchCountry,
@@ -54,7 +55,29 @@ import PagesSwitcher from "../MoviesButtons/PagesSwitcher";
             dispatch(getMovies(params))
 
             setNetflixHover("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
+            setHboHover("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
             setDisneyHover(prev => prev.replace('h-1', 'h-1.5').replace('bg-red-500', 'bg-red-600'))
+
+        }
+
+        const hboClickHandler = () => {
+
+            const params = {
+                country: searchCountry,
+                service: 'hbo',
+                type: searchType,
+                page: 1,
+                output_language: 'en',
+                language: 'en'
+            }
+
+            dispatch(setPage(1))
+            dispatch(setService('hbo'))
+            dispatch(getMovies(params))
+
+            setDisneyHover("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
+            setNetflixHover("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
+            setHboHover(prev => prev.replace('h-1', 'h-1.5').replace('bg-red-500', 'bg-red-600'))
 
         }
         
@@ -64,7 +87,7 @@ import PagesSwitcher from "../MoviesButtons/PagesSwitcher";
             className="ml-32">  
                 
                 <div
-                className="flex flex-row justify-start items-center gap-10">
+                className="flex flex-row justify-start items-start flex-wrap gap-10">
 
                     <div
                     onClick={() => netflixClickHandler()}
@@ -76,7 +99,7 @@ import PagesSwitcher from "../MoviesButtons/PagesSwitcher";
                     </div>
 
                     <div
-                    onClick={() => DisneyClickHandler()}
+                    onClick={() => disneyClickHandler()}
                     onMouseEnter={() => setDisneyHover(prev => prev.replace('bg-gray-400', 'bg-red-500'))}
                     onMouseLeave={() => setDisneyHover(prev => prev.replace('bg-red-500', 'bg-gray-400'))}
                     className="relative w-60 h-12 flex justify-center items-start cursor-pointer">
@@ -84,56 +107,19 @@ import PagesSwitcher from "../MoviesButtons/PagesSwitcher";
                         <div className={disneyHover}></div>
                     </div>
 
-                    <div 
-                    onClick={() => dispatch(setFilterState(!filterState))}
-                    className="text-4xl font-bold text-gray-900 ml-5">
-                        <p className="w-auto px-4 py-1 rounded-md bg-gray-500 cursor-pointer">filters</p>
+                    <div
+                    onClick={() => hboClickHandler()}
+                    onMouseEnter={() => setHboHover(prev => prev.replace('bg-gray-400', 'bg-red-500'))}
+                    onMouseLeave={() => setHboHover(prev => prev.replace('bg-red-500', 'bg-gray-400'))}
+                    className="relative w-60 h-12 flex justify-center items-start cursor-pointer">
+                        <p className="text-4xl font-bold text-gray-400">HBO</p>
+                        <div className={hboHover}></div>
                     </div>
 
+                    <Filters /> 
+                    
                 </div>
 
-                {
-                    filterState 
-                    && 
-                    <div className="flex flex-col gap-10 justify-start items-start w-auto h-72 overflow-hidden flex-wrap mt-10">
-
-                            <div className="flex flex-row gap-10 justify-start items-center">
-
-                                <div 
-                                onClick={() => dispatch(setFilterGenresState(!genresState))}
-                                className="bg-gray-500 text-gray-900 rounded-md font-bold text-2xl px-4 py-1 self-start cursor-pointer">
-                                    Genre{searchGenres !== undefined ? `: ${getGenresFromNumber(searchGenres)}` : 's' }
-                                </div>
-
-                                <div>fdsgdsfg</div>
-
-                            </div>
-
-                            <div className="flex flex-row gap-10 w-auto h-10 flex-wrap">
-                                {
-                                    genresState 
-                                    && 
-                                    genresArray.map(el => 
-                                    <div 
-                                    onClick={(e) => {
-                                        const target = e.target as HTMLElement
-                                        if (searchGenres == getGenresFromString(target.innerHTML)) {
-                                            dispatch(setGenre(undefined))
-                                        }
-                                        dispatch(setGenre(getGenresFromString(target.innerHTML)))
-                                        dispatch(setFilterGenresState(!genresState))
-                                    }} 
-                                    className="bg-gray-500 text-gray-900 font-black rounded-md px-4 py-1 cursor-pointer"
-                                    >
-                                        {el}
-                                    </div>)
-
-                                }  
-                            </div>
-
-                    </div>
-                        
-                }
 
                 {loadingState && <p>loading</p>}
 

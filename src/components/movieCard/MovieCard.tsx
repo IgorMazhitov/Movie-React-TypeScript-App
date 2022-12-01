@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { useAppSelector } from "../../rtk/hooks/hooks";
+import { IMovieState } from "../../rtk/slices/movieSlice";
 
-export const MovieCard: React.FC = (props: any) => {
+export const MovieCard = (props: IMovieState) => {
 
-    const {title, year, posterURLs, overview} = props
+    const { searchService, searchCountry } = useAppSelector(state => state.movies)
+    const {title, year, posterURLs, overview, streamingInfo} = props
     const [cardStyle, setCardStyle] = useState("relative h-[320px] w-[550px] rounded-lg flex flex-row justify-center items-center overflow-hidden shadow-slate-400 ml-5 duration-300")
     const [buttonHover, setButtonHover] = useState("watch_button w-40 h-12 font-bold text-4xl text-gray-400 rounded-md duration-300") // styling for button hover 
     const [actionInfo, setActionInfo] = useState({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})
     const [actionFav, setActionFav] = useState({filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'})
     const [imageStyle, setImageStyle] = useState("z-0 card-img-top w-full h-full object-cover rounded-md duration-300 scale-100")
+
+    const linkToWatch = streamingInfo[searchService][searchCountry].link 
+    
 
     return (
 
@@ -47,12 +53,18 @@ export const MovieCard: React.FC = (props: any) => {
                   /* buttons flex container */
                   className="flex flex-row justify-between items-center w-full h-full my-5 px-8">
 
-                    <button 
-                    className={buttonHover}
-                    onMouseEnter={() => setButtonHover(prev => prev.replace('watch_button', 'watch_button_hover').replace('text-gray-400', 'text-gray-600'))}
-                    onMouseLeave={() => setButtonHover(prev => prev.replace('watch_button_hover', 'watch_button').replace('text-gray-600', 'text-gray-400'))}
-                    > WATCH 
-                    </button>
+                    <a 
+                    href={linkToWatch}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    >
+                      <button 
+                      className={buttonHover}
+                      onMouseEnter={() => setButtonHover(prev => prev.replace('watch_button', 'watch_button_hover').replace('text-gray-400', 'text-gray-600'))}
+                      onMouseLeave={() => setButtonHover(prev => prev.replace('watch_button_hover', 'watch_button').replace('text-gray-600', 'text-gray-400'))}
+                      > WATCH 
+                      </button>
+                    </a>
 
                     <div className="flex flex-row justify-between items-center w-28 h-11">
 

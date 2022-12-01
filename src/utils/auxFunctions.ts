@@ -64,33 +64,3 @@ export const getGenresFromString = (genres: string) => {
 
 }
 
-export const genresArray = [
-    'Biography', 
-    'Film Noir', 
-    'Game Show', 
-    'Musical', 
-    'Sport', 
-    'Short', 
-    'Adult', 
-    'Adventure', 
-    'Fantasy', 
-    'Animation', 
-    'Drama', 
-    'Horror', 
-    'Action',
-    'Comedy',
-    'History',
-    'Western',
-    'Thriller',
-    'Crime',
-    'Documentary',
-    'Science Fiction',
-    'Mystery',
-    'Music',
-    'Romance',
-    'Family',
-    'War',
-    'News',
-    'Reality',
-    'Talk Show'
-]

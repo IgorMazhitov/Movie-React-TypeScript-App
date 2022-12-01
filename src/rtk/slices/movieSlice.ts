@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-interface IMovieState {
+export interface IMovieState {
     
     age: number,
     backdropPath: string,
@@ -61,6 +61,7 @@ interface IMoviesState {
     loadingState?: boolean,
     filterState?: boolean,
     genresState?: boolean,
+    countryState?: boolean
 
 }
 
@@ -73,8 +74,6 @@ const initialState: IMoviesState = {
     searchType: 'movie',
     searchKeyWord: '',
     loadingState: false,
-    filterState: false,
-    genresState: false
 
 }
   
@@ -125,12 +124,6 @@ export const moviesSlice = createSlice({
         setKeyword(state, action) {
             state.searchKeyWord = action.payload
         },
-        setFilterState(state, action) {
-            state.filterState = action.payload
-        },
-        setFilterGenresState(state, action) {
-            state.genresState = action.payload
-        }
     }, 
     extraReducers(builder) {
         builder.addCase(getMovies.fulfilled, (state, action) => {
@@ -146,4 +139,4 @@ export const moviesSlice = createSlice({
 })
 
 export default moviesSlice.reducer
-export const {setCountry, setGenre, setKeyword, setMovies, setPage, setService, setType, setFilterState, setMaxPage, setFilterGenresState} = moviesSlice.actions
+export const {setCountry, setGenre, setKeyword, setMovies, setPage, setService, setType, setMaxPage} = moviesSlice.actions
