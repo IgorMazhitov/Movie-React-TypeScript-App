@@ -1,11 +1,12 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../rtk/hooks/hooks";
-import { getMovies, setPage } from "../../rtk/slices/movieSlice";
+import { getMovies, setLoadingState, setPage } from "../../rtk/slices/movieSlice";
 
     const PagesSwitcher: React.FC = (props) => {
 
         const dispatch = useAppDispatch()
         const {searchPage, maxPage, searchCountry, searchType, searchService} = useAppSelector(state => state.movies)
+        const graySvgFilter = {filter: 'invert(99%) sepia(2%) saturate(2818%) hue-rotate(202deg) brightness(116%) contrast(75%)'}
 
         const pageDecr = () => {
             if (searchPage - 1 <= 0) {
@@ -21,6 +22,7 @@ import { getMovies, setPage } from "../../rtk/slices/movieSlice";
                     language: 'en'
                 }
 
+                dispatch(setLoadingState(true))
                 dispatch(setPage(searchPage - 1))
                 dispatch(getMovies(params))
             }
@@ -39,7 +41,8 @@ import { getMovies, setPage } from "../../rtk/slices/movieSlice";
                     output_language: 'en',
                     language: 'en'
                 }
-
+                
+                dispatch(setLoadingState(true))
                 dispatch(setPage(searchPage + 1))
                 dispatch(getMovies(params))
             }
@@ -49,13 +52,19 @@ import { getMovies, setPage } from "../../rtk/slices/movieSlice";
 
             <div className="flex flex-row gap-3 justify-center items-center mb-10 text-gray-400">
 
-                <div
+                <img
                 onClick={() => pageDecr()}
-                className="text-3xl">left</div>
-                    <p className="text-4xl">{searchPage}</p>
-                <div
+                src={require('../../svg/arrow.svg').default}
+                className="arrow_page w-7 h-7 rotate-180 cursor-pointer"
+                style={graySvgFilter}
+                ></img>
+                    <p className="text-4xl">{searchPage}/{maxPage}</p>
+                <img
                 onClick={() => pageIncr()}
-                className="text-3xl">right</div>
+                src={require('../../svg/arrow.svg').default}
+                className="arrow_page w-7 h-7 cursor-pointer"
+                style={graySvgFilter}
+                ></img>
 
             </div>
 

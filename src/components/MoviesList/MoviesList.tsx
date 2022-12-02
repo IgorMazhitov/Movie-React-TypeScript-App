@@ -4,15 +4,17 @@ import { getMovies, setPage, setService } from "../../rtk/slices/movieSlice";
 import { MovieCard } from "../movieCard/MovieCard";
 import PagesSwitcher from "../MoviesButtons/PagesSwitcher";
 import Filters from "../Filters/Filters";
+import LoadingCard from "../movieCard/LoadingCard";
 
     const MoviesList = (props: any) => {
-
         
         const dispatch = useAppDispatch()
         const {moviesArray, searchCountry, searchType, loadingState, searchGenres} = useAppSelector(state => state.movies)
         const [netflixHover, setNetflixHover] = useState("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
         const [disneyHover, setDisneyHover] = useState("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
         const [hboHover, setHboHover] = useState("absolute bottom-0 h-1 w-full bg-gray-400 duration-300")
+
+        console.log(moviesArray)
 
         const netflixClickHandler = () => {
 
@@ -120,14 +122,25 @@ import Filters from "../Filters/Filters";
                     
                 </div>
 
+                {
+                    /* loading cards */ 
+                    loadingState 
+                    && 
+                    <div className="flex flex-row gap-20 mr-20 py-5 flex-wrap my-20 h-full overflow-x-scroll">
 
-                {loadingState && <p>loading</p>}
+                        {loadingState && moviesArray.map(movie => <LoadingCard key={movie.imdbID} />)}
+
+                    </div>
+
+                }
+
 
                 {
                 
+                    /* loaded cards */ 
                     !loadingState 
                     && 
-                    <div className="flex flex-row gap-20 mr-20 py-5 flex-wrap my-20 max-h-full overflow-x-scroll">
+                    <div className="flex flex-row gap-20 mr-20 py-5 flex-wrap my-20 h-full overflow-x-scroll">
 
                         {moviesArray.map(movie => <MovieCard key={movie.tmdbID} {...movie}/>)}
 

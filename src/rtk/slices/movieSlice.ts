@@ -124,6 +124,9 @@ export const moviesSlice = createSlice({
         setKeyword(state, action) {
             state.searchKeyWord = action.payload
         },
+        setLoadingState(state, action) {
+            state.loadingState = action.payload
+        }
     }, 
     extraReducers(builder) {
         builder.addCase(getMovies.fulfilled, (state, action) => {
@@ -139,4 +142,4 @@ export const moviesSlice = createSlice({
 })
 
 export default moviesSlice.reducer
-export const {setCountry, setGenre, setKeyword, setMovies, setPage, setService, setType, setMaxPage} = moviesSlice.actions
+export const {setCountry, setGenre, setKeyword, setMovies, setPage, setService, setType, setMaxPage, setLoadingState} = moviesSlice.actions
