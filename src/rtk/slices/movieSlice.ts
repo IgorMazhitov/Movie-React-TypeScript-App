@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { stat } from 'fs'
 
 export interface IMovieState {
     
@@ -61,7 +62,7 @@ interface IMoviesState {
     loadingState?: boolean,
     filterState?: boolean,
     genresState?: boolean,
-    countryState?: boolean
+    countryState?: boolean,
 
 }
 
@@ -126,7 +127,7 @@ export const moviesSlice = createSlice({
         },
         setLoadingState(state, action) {
             state.loadingState = action.payload
-        }
+        },
     }, 
     extraReducers(builder) {
         builder.addCase(getMovies.fulfilled, (state, action) => {

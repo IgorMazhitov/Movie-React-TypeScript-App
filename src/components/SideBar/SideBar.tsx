@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../rtk/hooks/hooks";
+import { getMovies, setKeyword, setPage, setService } from "../../rtk/slices/movieSlice";
+import { setHomePageActive, setSearchPageActive } from "../../rtk/slices/pagesSlice";
 
     const SideBar: React.FC = (props) => {
+
+        const { searchKeyWord, searchType, searchService, searchCountry } = useAppSelector(state => state.movies)
+        const dispatch = useAppDispatch()
 
         const user = {
             name: 'Igor',
@@ -9,6 +15,8 @@ import React, { useState } from "react";
         const redIconStyle = {filter: 'invert(42%) sepia(32%) saturate(5440%) hue-rotate(334deg) brightness(94%) contrast(97%)'}
         const [hoverAccount, setHoverAccount] = useState(grayIconStyle)
         const [searchHover, setSearchHover] = useState(grayIconStyle)
+        const [searchActive, setSearchActive] = useState('absolute hidden left-0 top-0 w-0 h-10 text-3xl text-black duration-300 rounded-md overflow-hidden flex flex-row gap-1')
+        const [searchShowHide, setSearchShowHide] = useState("flex flex-row justify-start items-center w-full gap-5 cursor-pointer")
         const [homeHover, setHomeHover] = useState(grayIconStyle)
         const [genresHover, setGenresHover] = useState(grayIconStyle)
         const [favoritesHover, setFavoritesHover] = useState(grayIconStyle)
@@ -41,6 +49,31 @@ import React, { useState } from "react";
                 setHam3(prev => prev + ' -rotate-45 -translate-y-[17.2px]')
 
             }
+        }
+
+        const searchHideClick = () => {
+
+            setSearchShowHide(prev => prev + ' hidden')
+            setSearchActive(prev => prev.replace('w-0', 'w-full').replace('absolute', '').replace('hidden', ''))
+
+        }
+
+        const searchClick = () => {
+
+            const params = {
+                country: searchCountry,
+                service: searchService,
+                type: searchType,
+                page: 1,
+                keyword: searchKeyWord,
+                output_language: 'en',
+                language: 'en'
+            }
+
+            dispatch(setPage(1))
+            dispatch(getMovies(params))
+            dispatch(setSearchPageActive())
+
         }
 
         return (
@@ -76,12 +109,32 @@ import React, { useState } from "react";
 
                         </div>
 
-                        <div className="flex flex-col justify-start items-center w-full mt-10 gap-10 flex-nowrap px-5">
+                        <div className="relative flex flex-col justify-start items-center w-full mt-10 gap-10 flex-nowrap px-5">
 
                             <div
+                            className={searchActive}>
+                                <input
+                                className=" w-3/4 rounded-md p-1"
+                                value={searchKeyWord}
+                                onChange={(e) => {
+                                    dispatch(setKeyword(e.target.value))
+                                }}
+                                type="text" placeholder="Movie title . . ." ></input>
+                                <img
+                                onClick={() => searchClick()}
+                                style={searchHover}
+                                className="w-10 h-10 duration-300 p-1 cursor-pointer"
+                                onMouseEnter={() => setSearchHover(redIconStyle)}
+                                onMouseLeave={() => setSearchHover(grayIconStyle)}
+                                src={require('../../svg/search.svg').default}/>
+                            </div>
+
+                            <div
+                            onClick={() => searchHideClick()}
                             onMouseEnter={() => setSearchHover(redIconStyle)}
                             onMouseLeave={() => setSearchHover(grayIconStyle)}
-                            className="flex flex-row justify-start items-center w-full gap-5 cursor-pointer">
+                            className={searchShowHide}>
+
 
                                 <img
                                 style={searchHover}
@@ -93,6 +146,7 @@ import React, { useState } from "react";
                             </div>
 
                             <div
+                            onClick={() => dispatch(setHomePageActive())}
                             onMouseEnter={() => setHomeHover(redIconStyle)}
                             onMouseLeave={() => setHomeHover(grayIconStyle)} 
                             className="flex flex-row justify-start items-center w-full gap-5 cursor-pointer">

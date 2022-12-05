@@ -1,37 +1,28 @@
-import { useEffect } from 'react';
-import MoviesList from './components/MoviesList/MoviesList';
+import React from 'react';
 import SideBar from './components/SideBar/SideBar';
-import { useAppDispatch } from './rtk/hooks/hooks';
-import { getMovies, setLoadingState } from './rtk/slices/movieSlice';
+import HomePage from './pages/home/HomePage';
+import SearchPage from './pages/search/SearchPage';
+import { useAppDispatch, useAppSelector } from './rtk/hooks/hooks';
 
-function App() {
-
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-
-    const params = {
-      country: 'us',
-      service: 'netflix',
-      type: 'movie',
-      page:  1,
-      output_language: 'en',
-      language: 'en'
-    }
+  const App: React.FC = () => {
     
-    dispatch(setLoadingState(true))
-    dispatch(getMovies(params))
-  }, [])
+    const dispatch = useAppDispatch()
+    const { homePageState, searchPageState } = useAppSelector(state => state.pages)
+    
+    return (
+    
+      <div className="App relative bg-slate-900 w-screen h-screen overflow-scroll flex flex-row justify-start items-start m-0 p-0">
 
-  return (
-    <div className="App relative bg-slate-900 w-screen h-screen overflow-scroll flex flex-row justify-start items-start m-0 p-0">
-      <SideBar />
-      <div className='flex flex-col justify-start items-start w-full max-h-full pt-32'>
-        <MoviesList />
+        <SideBar />
+
+        {homePageState ? <HomePage /> : null}
+
+        {searchPageState ? <SearchPage /> : null}
+
       </div>
-    </div>
-  );
-}
+
+    )
+  }
 
 export default App;
 
