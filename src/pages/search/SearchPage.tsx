@@ -4,7 +4,7 @@ import { useAppSelector } from "../../rtk/hooks/hooks";
 
     const SearchPage: React.FC = (props: any) => {
 
-        const { moviesArray, searchKeyWord } = useAppSelector(state => state.movies)
+        const { searchKeyWord } = useAppSelector(state => state.movies)
 
         return (
 
